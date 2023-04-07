@@ -1,0 +1,73 @@
+/**
+ * Generate spacing utilities.
+ *
+ * Configurable by changing the values of $sizeUnit (rem, em, px), $marginKey ('m', 'marg', 'margin', etc), $paddingKey ('p', 'pad', 'padding', etc), $separator ('-', '_', '' for none, etc) and $sizes (whatever keys/values you need).
+ *
+ * Inspired by: https://gist.github.com/furey/aa886e3117f103af6046fc1978d5ca09
+ */
+
+$sizeUnit: rem;
+$marginKey: 'm';
+$paddingKey: 'p';
+$separator: '-';
+$sizes: (
+    ('none', 0),
+    //('xxs', 0.125),
+    //('xs', 0.25),
+    ('sm', 0.5),
+    ('md', 1),
+    ('lg', 2),
+    //('xl', 4),
+    //('xxl', 8),
+);
+$positions: (
+    ('t', 'top'),
+    ('r', 'right'),
+    ('b', 'bottom'),
+    ('l', 'left')
+);
+
+@function sizeValue($key, $value) {
+    @return if($key == 'none', 0, $value + $sizeUnit);
+}
+
+@each $size in $sizes {
+    $sizeKey: nth($size, 1);
+    $sizeValue: nth($size, 2);
+    .#{$marginKey}#{$separator}#{$sizeKey} {
+        margin: sizeValue($sizeKey, $sizeValue);
+    }
+    .#{$paddingKey}#{$separator}#{$sizeKey} {
+        padding: sizeValue($sizeKey, $sizeValue);
+    }
+    @each $position in $positions {
+        $posKey: nth($position, 1);
+        $posValue: nth($position, 2);
+        .#{$marginKey}#{$posKey}#{$separator}#{$sizeKey} {
+            margin-#{$posValue}: sizeValue($sizeKey, $sizeValue);
+        }
+        .#{$paddingKey}#{$posKey}#{$separator}#{$sizeKey} {
+            padding-#{$posValue}: sizeValue($sizeKey, $sizeValue);
+        }
+    }
+
+    // Add horizontal versions of each size
+    .#{$marginKey}x#{$separator}#{$sizeKey} {
+        margin-left: sizeValue($sizeKey, $sizeValue);
+        margin-right: sizeValue($sizeKey, $sizeValue);
+    }
+    .#{$paddingKey}x#{$separator}#{$sizeKey} {
+        padding-left: sizeValue($sizeKey, $sizeValue);
+        padding-right: sizeValue($sizeKey, $sizeValue);
+    }
+
+    // Add vertical versions of each size
+    .#{$marginKey}y#{$separator}#{$sizeKey} {
+        margin-top: sizeValue($sizeKey, $sizeValue);
+        margin-bottom: sizeValue($sizeKey, $sizeValue);
+    }
+    .#{$paddingKey}y#{$separator}#{$sizeKey} {
+        padding-top: sizeValue($sizeKey, $sizeValue);
+        padding-bottom: sizeValue($sizeKey, $sizeValue);
+    }
+}

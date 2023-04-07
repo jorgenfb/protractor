@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 500px;
+}
+
+protractor-cake {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+
+button[mat-raised-button] {
+  height: 64px;
+}
