@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Measurement } from './app-state.service';
+import { Measurement } from '../data-access/app-state.service';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { CakeComponent } from './cake.component';

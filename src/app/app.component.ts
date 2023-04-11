@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { combineLatestWith, filter, map, tap } from 'rxjs/operators';
-import { AppStateService, Measurement } from './app-state.service';
-import { DeviceOrientationService } from './device-orientation.service';
+import { AppStateService, Measurement } from './data-access/app-state.service';
+import { DeviceOrientationService } from './data-access/device-orientation.service';
 import { Observable } from 'rxjs';
-import { CakeComponent } from './cake.component';
+import { CakeComponent } from './ui/cake.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { HistoryComponent } from './history.component';
+import { HistoryComponent } from './ui/history.component';
 
 @Component({
   standalone: true,
