@@ -1,6 +1,6 @@
 <protractor-cake
   class="pt-md"
-  [angle]="diff$ | async"
+  [angle]="diff()"
   [showLabel]="true"
 ></protractor-cake>
 
@@ -10,8 +10,8 @@
   color="primary"
   (click)="onMeasureClick()"
 >
-  {{ actionText$ | async }}
+  {{ actionText() }}
 </button>
 
 <h2 class="mat-h2 px-md">HISTORY</h2>
-<protractor-history [history]="history$ | async"></protractor-history>
+<protractor-history [history]="state.history()"></protractor-history>

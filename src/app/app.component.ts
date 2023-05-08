@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
-import { combineLatestWith, filter, map, tap } from 'rxjs/operators';
-import { AppStateService, Measurement } from './data-access/app-state.service';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Signal,
+} from '@angular/core';
+import { filter, map } from 'rxjs/operators';
+import { AppStateService } from './data-access/app-state.service';
 import { DeviceOrientationService } from './data-access/device-orientation.service';
-import { Observable } from 'rxjs';
 import { CakeComponent } from './ui/cake.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HistoryComponent } from './ui/history.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   standalone: true,
@@ -20,57 +25,47 @@ import { HistoryComponent } from './ui/history.component';
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  /* TODO: Remove this piece of state and use a stream of clicks$ to do actions when they occour */
-  private currentValue!: number;
-
-  public diff$!: Observable<number>;
-  public history$!: Observable<Measurement[]>;
-  public actionText$!: Observable<string>;
+  alpha: Signal<number | undefined>;
+  diff: Signal<number | undefined>;
+  actionText: Signal<string>;
 
   constructor(
-    private stateService: AppStateService,
+    public state: AppStateService,
     private deviceMotionService: DeviceOrientationService
-  ) {}
-
-  ngOnInit() {
-    const alpha$: Observable<number> = this.deviceMotionService.get().pipe(
-      map((event) => event.alpha as number),
-      filter<number>((event) => event !== null),
-      tap((value) => {
-        this.currentValue = value as number;
-      })
+  ) {
+    // Set the button action text based on the state
+    this.actionText = computed(() =>
+      this.state.reference() === undefined ? 'SET REFERENCE' : 'MEASURE'
     );
 
-    // Start listen for history items
-    this.history$ = this.stateService.state$.pipe(
-      map((state) => state.history)
+    this.alpha = toSignal(
+      this.deviceMotionService.get().pipe(
+        map((event) => event.alpha),
+        filter((alpha): alpha is number => alpha !== null)
+      )
     );
 
-    this.diff$ = this.stateService.state$.pipe(
-      filter((state) => state.hasReference),
-      map((state) => state.reference),
-      combineLatestWith(alpha$),
-      map(([reference, alpha]) => {
-        return alpha - reference;
-      }),
-      map((value) => {
-        // Normalize value to +/- 180 degrees
-        return value - 360 * Math.floor((value + 180) / 360);
-      })
-    );
+    this.diff = computed(() => {
+      const ref = this.state.reference();
+      const alpha = this.alpha();
+      if (ref === undefined || alpha === undefined) {
+        return undefined;
+      }
+      const diff = alpha - ref;
 
-    this.actionText$ = this.stateService.state$.pipe(
-      map((state) => state.hasReference),
-      map((hasRef) => {
-        return hasRef ? 'MEASURE' : 'SET REFERENCE';
-      })
-    );
+      // Normalize value to +/- 180 degrees
+      return diff - 360 * Math.floor((diff + 180) / 360);
+    });
   }
 
   onMeasureClick() {
-    this.stateService.setMeasurement(this.currentValue);
+    const angle = this.alpha();
+    if (angle) {
+      this.state.setMeasurement(angle);
+    }
   }
 
   results = [
