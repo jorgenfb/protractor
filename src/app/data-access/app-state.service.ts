@@ -1,4 +1,5 @@
 import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
+import { isNumeric } from "../utils/utils";
 
 export interface Measurement {
   value: number;
@@ -9,10 +10,6 @@ export interface AppState {
   reference: number;
   hasReference: boolean;
   history: Measurement[];
-}
-
-function isNumeric(n: any): n is number {
-  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 @Injectable({
@@ -66,5 +63,9 @@ export class AppStateService {
         JSON.stringify(this.history().slice(0, 10))
       );
     } catch (e) {}
+  }
+
+  setReference(n: number) {
+    this._reference.set(n);
   }
 }

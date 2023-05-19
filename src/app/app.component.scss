@@ -5,12 +5,28 @@
   max-width: 500px;
 }
 
+.cake-wrapper {
+  position: relative;
+}
+
+.btn--reset {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
 protractor-cake {
   width: 100%;
   max-width: 300px;
   margin: auto;
 }
 
-button[mat-raised-button] {
+.btn--reset,
+.btn--measure {
   height: 64px;
 }
+
+svg {
+  vertical-align: middle;
+}
+

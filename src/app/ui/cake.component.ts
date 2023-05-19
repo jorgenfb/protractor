@@ -54,6 +54,13 @@ function isNumeric(n: any): n is number {
       </text>
     </svg>
   `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
 export class CakeComponent implements OnChanges {
   @Input() angle: number | undefined | null;

@@ -2,16 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   Signal,
 } from '@angular/core';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, take, tap } from 'rxjs/operators';
 import { AppStateService } from './data-access/app-state.service';
 import { DeviceOrientationService } from './data-access/device-orientation.service';
 import { CakeComponent } from './ui/cake.component';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HistoryComponent } from './ui/history.component';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { isNumeric } from './utils/utils';
+import { NormalizeAnglePipe } from './ui/normalize-angle.pipe';
 
 @Component({
   standalone: true,
@@ -21,7 +24,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatButtonModule,
     CakeComponent,
     HistoryComponent,
-    AsyncPipe,
+    NormalizeAnglePipe,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -30,17 +33,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class AppComponent {
   alpha: Signal<number | undefined>;
   diff: Signal<number | undefined>;
-  actionText: Signal<string>;
 
   constructor(
     public state: AppStateService,
     private deviceMotionService: DeviceOrientationService
   ) {
-    // Set the button action text based on the state
-    this.actionText = computed(() =>
-      this.state.reference() === undefined ? 'SET REFERENCE' : 'MEASURE'
-    );
-
     this.alpha = toSignal(
       this.deviceMotionService.get().pipe(
         map((event) => event.alpha),
@@ -48,16 +45,25 @@ export class AppComponent {
       )
     );
 
+    // Take the first value and set is as the reference.
+    this.deviceMotionService
+      .get()
+      .pipe(
+        map((event) => event.alpha),
+        filter(isNumeric),
+        tap((alpha) => this.state.setMeasurement(alpha)),
+        take(1),
+        takeUntilDestroyed()
+      )
+      .subscribe();
+
     this.diff = computed(() => {
       const ref = this.state.reference();
       const alpha = this.alpha();
       if (ref === undefined || alpha === undefined) {
         return undefined;
       }
-      const diff = alpha - ref;
-
-      // Normalize value to +/- 180 degrees
-      return diff - 360 * Math.floor((diff + 180) / 360);
+      return alpha - ref;
     });
   }
 
@@ -68,9 +74,10 @@ export class AppComponent {
     }
   }
 
-  results = [
-    { value: 52, created: Date.now() },
-    { value: -152, created: Date.now() },
-    { value: 152, created: Date.now() },
-  ];
+  onResetClick() {
+    const angle = this.alpha();
+    if (angle) {
+      this.state.setReference(angle);
+    }
+  }
 }
