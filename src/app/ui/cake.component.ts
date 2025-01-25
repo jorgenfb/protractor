@@ -12,10 +12,10 @@ function isNumeric(n: any): n is number {
 }
 
 @Component({
-    selector: 'protractor-cake',
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'protractor-cake',
+  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <svg
       class="indicator"
       viewBox="0 0 120 120"
@@ -32,7 +32,7 @@ function isNumeric(n: any): n is number {
       <path
         [attr.d]="path"
         stroke="#000"
-        fill="#ff4081"
+        fill="rgb(169, 0, 169)"
         [attr.stroke-width]="strokeWidth"
         stroke-linecap="round"
       />
@@ -53,13 +53,13 @@ function isNumeric(n: any): n is number {
       </text>
     </svg>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         display: block;
       }
     `,
-    ]
+  ],
 })
 export class CakeComponent implements OnChanges {
   @Input() angle: number | undefined | null;

@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use "@angular/material" as mat;
 @use "spacing.scss";
+
+html {
+  @include mat.theme(
+    (
+      color: mat.$magenta-palette,
+      typography: Roboto,
+      density: -2,
+    )
+  );
+}
 
 html,
 body {
