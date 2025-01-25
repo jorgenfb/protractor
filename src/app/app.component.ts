@@ -17,18 +17,17 @@ import { isNumeric } from './utils/utils';
 import { NormalizeAnglePipe } from './ui/normalize-angle.pipe';
 
 @Component({
-  standalone: true,
-  selector: 'app-root',
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    CakeComponent,
-    HistoryComponent,
-    NormalizeAnglePipe,
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-root',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        CakeComponent,
+        HistoryComponent,
+        NormalizeAnglePipe,
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   alpha: Signal<number | undefined>;

@@ -6,11 +6,10 @@ import { CakeComponent } from './cake.component';
 import { NormalizeAnglePipe } from './normalize-angle.pipe';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, MatListModule, CakeComponent, NormalizeAnglePipe, DecimalPipe],
-  selector: 'protractor-history',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    imports: [CommonModule, MatListModule, CakeComponent, NormalizeAnglePipe, DecimalPipe],
+    selector: 'protractor-history',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <mat-list *ngIf="(history?.length || 0) > 0">
       <ng-container *ngFor="let result of history; trackBy: trackByStamp">
         <mat-divider></mat-divider>
@@ -26,7 +25,7 @@ import { NormalizeAnglePipe } from './normalize-angle.pipe';
         </mat-list-item>
       </ng-container>
     </mat-list>
-  `,
+  `
 })
 export class HistoryComponent {
   @Input() history: Measurement[] | null | undefined;
