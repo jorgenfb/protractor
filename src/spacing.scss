@@ -1,3 +1,4 @@
+@use "sass:list";
 /**
  * Generate spacing utilities.
  *
@@ -32,8 +33,8 @@ $positions: (
 }
 
 @each $size in $sizes {
-    $sizeKey: nth($size, 1);
-    $sizeValue: nth($size, 2);
+    $sizeKey: list.nth($size, 1);
+    $sizeValue: list.nth($size, 2);
     .#{$marginKey}#{$separator}#{$sizeKey} {
         margin: sizeValue($sizeKey, $sizeValue);
     }
@@ -41,8 +42,8 @@ $positions: (
         padding: sizeValue($sizeKey, $sizeValue);
     }
     @each $position in $positions {
-        $posKey: nth($position, 1);
-        $posValue: nth($position, 2);
+        $posKey: list.nth($position, 1);
+        $posValue: list.nth($position, 2);
         .#{$marginKey}#{$posKey}#{$separator}#{$sizeKey} {
             margin-#{$posValue}: sizeValue($sizeKey, $sizeValue);
         }
