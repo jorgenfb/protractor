@@ -26,9 +26,9 @@ import { NormalizeAnglePipe } from './normalize-angle.pipe';
 						matListItemIcon
 					></protractor-cake>
 					<span matListItemTitle
-						>{{ result.value | normalizeAngle | number : '1.1-1' }} °</span
+						>{{ result.value | normalizeAngle | number: '1.1-1' }} °</span
 					>
-					<span matListItemLine>{{ result.time | date : 'mediumTime' }}</span>
+					<span matListItemLine>{{ result.time | date: 'mediumTime' }}</span>
 				</mat-list-item>
 			</ng-container>
 		</mat-list>

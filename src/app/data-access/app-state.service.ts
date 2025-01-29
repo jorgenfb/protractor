@@ -28,7 +28,7 @@ export class AppStateService {
 		// Try read existing history from local storage
 		try {
 			const fromStorage = JSON.parse(
-				localStorage.getItem('protractor-history') || ''
+				localStorage.getItem('protractor-history') || '',
 			);
 			if (Array.isArray(fromStorage)) {
 				this._history.set(fromStorage);
@@ -70,7 +70,7 @@ export class AppStateService {
 		try {
 			localStorage.setItem(
 				'protractor-history',
-				JSON.stringify(this.history().slice(0, 10))
+				JSON.stringify(this.history().slice(0, 10)),
 			);
 		} catch (e) {}
 	}

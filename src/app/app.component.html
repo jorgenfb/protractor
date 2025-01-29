@@ -1,29 +1,29 @@
 <div class="cake-wrapper mx-md">
 	<button class="btn--toggle-axis mt-md" mat-button (click)="onToggleAxis()">
-		@if(state.axis() === 'alpha') {
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="35"
-			height="35"
-			viewBox="0 0 24 24"
-		>
-			<title>axis-z-rotate-clockwise</title>
-			<path
-				d="M14,12L10,16L14,20V16.9C18.56,16.44 22,14.42 22,12C22,9.58 18.56,7.56 14,7.1V9.09C17.45,9.43 20,10.6 20,12C20,13.4 17.45,14.57 14,14.91V12M4,12C4,10.6 6.55,9.43 10,9.09V7.1C5.44,7.56 2,9.58 2,12C2,14.16 4.74,16 8.58,16.7L7.88,16L9.08,14.79C6.11,14.36 4,13.27 4,12M13,2H11V13L13,11V2M13,22V21L11,19V22H13Z"
-			/>
-		</svg>
+		@if (state.axis() === "alpha") {
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="35"
+				height="35"
+				viewBox="0 0 24 24"
+			>
+				<title>axis-z-rotate-clockwise</title>
+				<path
+					d="M14,12L10,16L14,20V16.9C18.56,16.44 22,14.42 22,12C22,9.58 18.56,7.56 14,7.1V9.09C17.45,9.43 20,10.6 20,12C20,13.4 17.45,14.57 14,14.91V12M4,12C4,10.6 6.55,9.43 10,9.09V7.1C5.44,7.56 2,9.58 2,12C2,14.16 4.74,16 8.58,16.7L7.88,16L9.08,14.79C6.11,14.36 4,13.27 4,12M13,2H11V13L13,11V2M13,22V21L11,19V22H13Z"
+				/>
+			</svg>
 		} @else {
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="35"
-			height="35"
-			viewBox="0 0 24 24"
-		>
-			<title>horizontal-rotate-counterclockwise</title>
-			<path
-				d="M12 10H9.09C9.43 6.55 10.6 4 12 4S14.57 6.55 14.91 10H16.9C16.44 5.44 14.42 2 12 2S7.56 5.44 7.1 10H4L8 14L12 10M12 20C10.73 20 9.64 17.89 9.21 14.92L8 16.12L7.3 15.42C8 19.26 9.84 22 12 22C14.42 22 16.44 18.56 16.9 14H14.91C14.57 17.45 13.4 20 12 20M22 11H13L11 13H22V11M2 13H5L3 11H2V13"
-			/>
-		</svg>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="35"
+				height="35"
+				viewBox="0 0 24 24"
+			>
+				<title>horizontal-rotate-counterclockwise</title>
+				<path
+					d="M12 10H9.09C9.43 6.55 10.6 4 12 4S14.57 6.55 14.91 10H16.9C16.44 5.44 14.42 2 12 2S7.56 5.44 7.1 10H4L8 14L12 10M12 20C10.73 20 9.64 17.89 9.21 14.92L8 16.12L7.3 15.42C8 19.26 9.84 22 12 22C14.42 22 16.44 18.56 16.9 14H14.91C14.57 17.45 13.4 20 12 20M22 11H13L11 13H22V11M2 13H5L3 11H2V13"
+				/>
+			</svg>
 		}
 	</button>
 	<protractor-cake

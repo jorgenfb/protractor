@@ -16,7 +16,7 @@ export class DeviceOrientationService {
 	get(): Observable<Orientation> {
 		return fromEvent<DeviceOrientationEvent>(window, 'deviceorientation').pipe(
 			filter((event) => isNumeric(event.alpha)),
-			map((v) => v as Orientation)
+			map((v) => v as Orientation),
 		);
 	}
 }

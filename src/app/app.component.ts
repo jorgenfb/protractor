@@ -44,7 +44,7 @@ export class AppComponent {
 
 	constructor(
 		public state: AppStateService,
-		private deviceMotionService: DeviceOrientationService
+		private deviceMotionService: DeviceOrientationService,
 	) {
 		const eventAsSignal = toSignal(this.deviceMotionService.get());
 
@@ -92,7 +92,7 @@ export class AppComponent {
 				map((event) => event[this.state.axis()]),
 				tap((value) => this.state.setMeasurement(value)),
 				take(1),
-				takeUntilDestroyed()
+				takeUntilDestroyed(),
 			)
 			.subscribe();
 	}
